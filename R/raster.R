@@ -6,7 +6,7 @@
 #' @import htmltools
 #' @importFrom digest digest
 print.trellis <- function(x, ...) {
-  print_graphics(x)
+  print_graphics(x, ...)
 }
 
 #' Print ggplot2 plot to servr
@@ -15,10 +15,10 @@ print.trellis <- function(x, ...) {
 #' @param \ldots  additional parameters
 #' @S3method print ggplot
 print.ggplot <- function(x, ...) {
-  print_graphics(x)
+  print_graphics(x, ...)
 }
 
-print_graphics <- function(x) {
+print_graphics <- function(x, w, h) {
 
   graphics_opt <- getOption("rmote_graphics", FALSE)
 
@@ -29,6 +29,7 @@ print_graphics <- function(x) {
     if(!file.exists(output_dir))
       dir.create(output_dir, recursive = TRUE)
 
+    if (!missing(w) && !missing(h)) rmote_device(width=w, height=h)
     opts <- getOption("rmote_device")
     if(is.null(opts)) {
       rmote_device()
